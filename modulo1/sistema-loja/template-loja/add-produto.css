@@ -1,0 +1,26 @@
+p {
+    color: white;
+    font-size: 18px;
+    font-style: italic;
+    background-color: rgba(128, 0, 128, 0.438);
+    display: inline;
+}
+
+nav{
+    display: block;
+    margin: 15px 5px 20px 5px;
+    }
+
+    h2 {
+        background-color: bisque;
+        margin: 15px 15px 15px 25px;
+        display: inline;
+    }
+
+    form {
+    margin: 10px 10px 15px 10px;
+    }
+
+    button {
+        margin-top: 10px;
+    }
