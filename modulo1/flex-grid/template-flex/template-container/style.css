@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#container {
+    display: flex;
+    flex-direction:column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    background-color: mediumvioletred;
+   justify-content: space-between;
+    font-size: 1.5rem;
+    height: 45px;
+    padding: 20px;
+}
+
+main {
+    display: flex;
+    flex-grow: 1;
+    
+}
+
+.card img{
+    height: 250px;
+    width: 250px;
+    padding: 15px 5px 10px 25px;
+}
+
+.card{
+    box-shadow: 3px 2px darkgrey;
+    display: flex;
+    width: 250px;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    text-align: center;
+    column-gap: normal;
+}
+
+.lateral {
+    gap: 16px;
+    background-color: #f2d0e0 ;
+    width: 35%;
+    padding-left: 6px;
+}
+
+.lateral img{
+    height: 15px;
+}
+
+.principal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.area {
+    display: flex;
+    justify-content: space-between ;
+    padding: 8px;
+   }
+
+.area-left {
+    display: flex;
+   
+}
+.area-left img{
+    margin-right: 5px;
+    
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    background-color:mediumvioletred ;
+    font-size: 1.2rem;
+    margin: 0 5px 10px 0;
+    padding: 10px 5px 10px 10px;
+}
