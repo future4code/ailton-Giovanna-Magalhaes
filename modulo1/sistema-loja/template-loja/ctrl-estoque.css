@@ -1,0 +1,40 @@
+p {
+    color: white;
+    font-size: 18px;
+    font-style: italic;
+    background-color: rgba(128, 0, 128, 0.438);
+    display: inline;
+}
+
+nav{
+display: block;
+margin: 15px 5px 20px 5px;
+}
+
+h2 {
+    background-color: bisque;
+    margin: 15px 15px 15px 25px;
+    display: inline;
+}
+
+table {
+    border: 2px solid black;
+    margin-top: 6px;
+}
+
+th {
+    padding: 2px 6px 1px 6px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+tr {
+    margin: 2px 5px 5px 5px;
+    background-color: beige;
+}
+
+td {
+    margin: 10px;
+text-align: center;
+border: 1px solid black;
+}
