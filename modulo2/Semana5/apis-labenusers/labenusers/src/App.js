@@ -3,31 +3,59 @@ import "./App.css";
 import axios from "axios";
 import styled from "styled-components";
 
+const FundoDeTela = styled.div`
+  background-color: beige;
+  height: 100vh;
+`;
+
 const Inputs = styled.input`
   margin-left: 5px;
+  border: 1px solid #c27ba0;
+  display: block;
+  margin: 0 auto;
 `;
 const Labels = styled.label`
-  margin-left: 2px;
+  margin-left: 5px;
   display: block;
-  font-size: medium;
-`
-const BotaoDeletar = styled.button `
-margin-left: 4px;
-`
-const Titulo = styled.h3`
-text-align: left;
-color: #c27ba0;
-margin-left: 15px;
-`
-const TituloPrincipal = styled.h2 `
-text-align: center;
-color: #a64d79;
-`
-const VariacaoDePagina = styled.button `
-margin-left: 5px;
-border: 1px solid purple;
+  font-size: small;
+  padding: 2px 0 2px 0;
+  text-align: center;
+  font-style: italic;
+`;
+const BotaoDeletar = styled.button`
+  display: inline-block;
+  margin: 5px 0 5px 10px;
+  border: 1px solid purple;
+`;
+const Titulo = styled.h2`
+  text-align: center;
+  color: #c27ba0;
+  margin-left: 15px;
+  font-style: italic;
+  
+`;
+const TituloPrincipal = styled.h1`
+  text-align: center;
+  color: #a64d79;
+  background-color: beige;
+`;
+const VariacaoDePagina = styled.button`
+  border: 1px solid purple;
+  margin: 2px;
+  display: inline-block;
+  text-align: center;
+`;
+const BotaoCriarUsuario = styled.button`
+  display: block;
+  margin: 0 auto;
+  border: 1px solid purple;
+  margin-top: 10px;
+`;
 
-`
+const BordaNome = styled.p`
+  border: 1px dashed #c27ba0;
+  margin-left: 2px;
+`;
 
 class App extends React.Component {
   state = {
@@ -80,8 +108,8 @@ class App extends React.Component {
         alert("Deu erro!");
       });
 
-      this.setState({inputName:""})
-      this.setState({inputEmail:""})
+    this.setState({ inputName: "" });
+    this.setState({ inputEmail: "" });
   };
 
   getAllUsers = () => {
@@ -135,21 +163,29 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <FundoDeTela>
         <header>
-          <TituloPrincipal>Execício de Integração Básica de APIs</TituloPrincipal>
+          <TituloPrincipal>
+            Execício de Integração Básica de APIs
+          </TituloPrincipal>
           <hr />
-          <nav>
-            <ul>
-              <VariacaoDePagina onClick={this.onClickPrincipal}> Cadastrar Usuários </VariacaoDePagina>
-                <VariacaoDePagina onClick={this.onClickLista}> Lista de Usuários </VariacaoDePagina>
-            </ul>
-          </nav>
         </header>
+        <nav>
+          <ul>
+            <VariacaoDePagina onClick={this.onClickPrincipal}>
+              {" "}
+              Cadastrar Usuários{" "}
+            </VariacaoDePagina>
+            <VariacaoDePagina onClick={this.onClickLista}>
+              {" "}
+              Lista de Usuários{" "}
+            </VariacaoDePagina>
+          </ul>
+        </nav>
         <main>
           {this.state.page === "Cadastro" && (
             <div>
-              <hr/>
+              <hr />
               <Titulo>CADASTRO DE USUÁRIOS</Titulo>
               <Labels htmlFor="name">Nome:</Labels>
               <Inputs
@@ -163,7 +199,9 @@ class App extends React.Component {
                 value={this.state.inputEmail}
                 onChange={this.onChangeInputEmail}
               />
-              <button onClick={this.createUsers}>Criar Usuário</button>
+              <BotaoCriarUsuario onClick={this.createUsers}>
+                Criar Usuário
+              </BotaoCriarUsuario>
             </div>
           )}
           {this.state.page === "Lista" && (
@@ -172,18 +210,20 @@ class App extends React.Component {
               <Titulo> LISTA DE USUÁRIOS CADASTRADOS </Titulo>
               {this.state.usuarios.map((item) => {
                 return (
-                  <p key={item.id}>
+                  <BordaNome key={item.id}>
                     Nome: {item.name}
-                    <BotaoDeletar onClick={() => this.deleteUsers(item.id)}>Deletar Usuário</BotaoDeletar>
-                  </p>
+                    <BotaoDeletar onClick={() => this.deleteUsers(item.id)}>
+                      Deletar Usuário
+                    </BotaoDeletar>
+                  </BordaNome>
                 );
               })}
-            <div></div>
-          </div>
-         )} 
+              <div></div>
+            </div>
+          )}
         </main>
         <footer></footer>
-      </div>
+      </FundoDeTela>
     );
   }
 }
