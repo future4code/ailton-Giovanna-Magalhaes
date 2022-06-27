@@ -3,22 +3,40 @@ import "./App.css";
 import axios from "axios";
 import styled from "styled-components";
 
+const TituloPrincipal = styled.h1`
+  display: flex;
+  justify-content: center;
+  color: greenyellow;
+  background-color: green;
+`;
+
 class App extends React.Component {
   state = {
     inputPlaylist: "",
-    playlist: [],
+    playlists: [],
+    page: "Principal",
   };
 
- 
-  onChangeInputPlaylist = (event) => {
-    this.setState({inputPlaylist: event.target.value });
+  onClickPrincipal = () => {
+    this.setState({
+      page: "Principal",
+    });
   };
- 
+
+  onClickListaPlaylist = () => {
+    this.setState({
+      page: "Lista de Playlists",
+    });
+  };
+
+  onChangeInputPlaylist = (event) => {
+    this.setState({ inputPlaylist: event.target.value });
+  };
 
   createPlaylist = () => {
-  const body = { 
-    name: ''
-  }
+    const body = {
+      name: this.state.inputPlaylist,
+    };
     const createPlaylist = axios.post(
       "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists",
       body,
@@ -30,27 +48,50 @@ class App extends React.Component {
     );
     createPlaylist
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
         this.getAllPlaylists();
-        alert("Deu certo!");
+        alert("Playlist criada!");
       })
       .catch((error) => {
         console.log(error);
         alert("Deu erro!");
       });
-     };
+  };
 
   getAllPlaylists = () => {
     const body = {
       quantity: "",
       list: [],
       id: "",
-      name: ""
-    }
+      name: "",
+    };
 
     axios
       .get(
-        "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists", body,
+        "https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists",
+        {
+          headers: {
+            Authorization: "giovanna-magalhaes-ailton",
+          },
+          body,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  componentDidMount() {
+    this.getAllPlaylists();
+  }
+
+  deletePlaylists = (id) => {
+    axios
+      .delete(
+        `https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}`,
         {
           headers: {
             Authorization: "giovanna-magalhaes-ailton",
@@ -58,103 +99,56 @@ class App extends React.Component {
         }
       )
       .then((response) => {
+        this.getAllPlaylists();
         console.log(response);
-        const arrayUsuarios = response.data.map((item) => {
-          return item;
-        });
-        this.setState({
-          usuarios: arrayUsuarios,
-        });
+        alert("Deletou!");
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log(error);
+        alert("ERRO!");
       });
   };
-
-  // componentDidMount() {
-  //   this.getAllUsers();
-  // }
-
-  // deleteUsers = (id) => {
-  //   axios
-  //     .delete(
-  //       `https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`,
-  //       {
-  //         headers: {
-  //           Authorization: "giovanna-magalhaes-ailton",
-  //         },
-  //       }
-  //     )
-  //     .then((response) => {
-  //       this.getAllUsers();
-  //       console.log(response);
-  //       alert("Deletou!");
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       alert("ERRO!");
-  //     });
-  // };
 
   render() {
     return (
       <div>
         <header>
-          <h1>
-            LABEFY
-          </h1>
-          <hr />
+          <TituloPrincipal>LABEFY</TituloPrincipal>
         </header>
         <nav>
           <ul>
-            <button onClick={this.onClickPrincipal}>
-              {" "}
-              Criar Playlist{" "}
-            </button>
-            <button onClick={this.onClickLista}>
-              {" "}
-              Lista de Usuários{" "}
-            </button>
+            {this.state.page === "Principal" && (
+              <div>
+                <input
+                  id="name"
+                  value={this.state.inputPlaylist}
+                  onChange={this.onChangeInputPlaylist}
+                />
+                <button onClick={this.createPlaylist}> Criar Playlist </button>
+              </div>
+            )}
           </ul>
-        </nav>
-        <main>
-          {this.state.page === "Cadastro" && (
-            <div>
-              <h2>CADASTRO DE USUÁRIOS</h2>
-              <label htmlFor="name">Nome:</label>
-              <input
-                id="nome"
-                value={this.state.inputName}
-                onChange={this.onChangeInputName}
-              />
-              <label htmlFor="email">E-mail:</label>
-              <input
-                id="email"
-                value={this.state.inputEmail}
-                onChange={this.onChangeInputEmail}
-              />
-              <button onClick={this.createUsers}>
-                Criar Usuário
-              </button>
-            </div>
-          )}
-          {this.state.page === "Lista" && (
-            <div>
-              <h2> LISTA DE USUÁRIOS CADASTRADOS </h2>
-              {this.state.usuarios.map((item) => {
+          {/* {this.state.page === "Lista de Playlists" && ( */}
+          <div>
+            {/* {this.state.playlists.map((item) => {
                 return (
                   <p key={item.id}>
                     Nome: {item.name}
-                    <button onClick={() => this.deleteUsers(item.id)}>
-                      Deletar Usuário
-                    </button>
-                  </p>
-                );
-              })}
-              <div></div>
-            </div>
-          )}
-        </main>
+                    <button onClick={() => this.deletePlaylists(item.id)}>
+                    Deletar Usuário
+                  </button>
+                    </p>
+            );
+          })} */}
+
+          <button onClick={this.onClickPrincipal}> Página Principal </button>
+          <button onClick={this.onClickListaPlaylist}>
+            {" "}
+            Lista de Playlists{" "}
+          </button>
+          </div>
+          {/* )} */}
+        </nav>
         <footer></footer>
       </div>
     );
