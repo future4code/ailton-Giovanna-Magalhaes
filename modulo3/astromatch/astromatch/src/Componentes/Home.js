@@ -13,44 +13,57 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const TituloCard = styled.div``;
+const BotaoCard = styled.button`
+  display: inline-flex;
+  align-items: flex-start;
+  justify-items: space-between;
+  border-radius: 6px;
+  border: 1px solid #004962;
+  border-style: outset;
+  font: 12px tahoma, sans-serif;
+  text-shadow: white;
+  background-color: #004962;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08);
+`;
 const Header = styled.header`
   width: 100vw;
-  height: 13vh;
-  background-color: #d5a6bd;
+  height: 1vh;
+  background-color: #999999;
   letter-spacing: 2px;
   font-family: "tahoma";
   display: flex;
   align-items: center;
-  justify-content: space-between;
   font-size: 20px;
-
-  button {
-    margin-right: 8px;
-    border-radius: 6px;
-    border: 1px solid #004962;
-    color: #004962;
-  }
 `;
 
 const DivHeader = styled.div`
+  font-size: 17px;
+  margin-left: 3px;
+  display: inline;
+  align-items: center;
+  justify-items: center;
+  position: fixed;
+  top: 6vh;
   h2 {
     color: #004962;
     display: inline;
-    padding-left: 18px;
   }
   h3 {
-    color: white;
+    color: #76a5af;
     display: inline;
   }
   h5 {
     color: #004962;
     display: inline;
-    margin-left: 3px;
+    margin-left: 6px;
+    margin-right: 130px;
   }
 `;
 
 const TextoBio = styled.p`
-  padding-left: 10px;
+  padding-left: 12px;
   font-size: small;
 `;
 const CardHome = styled.div`
@@ -60,29 +73,32 @@ const CardHome = styled.div`
   align-items: center;
   justify-content: center;
   padding: 3px;
+  padding-top: 6px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08);
   border-radius: 10px;
-  width: 400px;
-  height: 75vh;
-`;
-const Main = styled.div`
-  width: 100vw;
-  height: 80vh;
-  background-color: #ead1dc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 350px;
+  height: 90vh;
   img {
+    margin-top: 50px;
     height: 280px;
     width: 230px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
-    border: 1px solid #d5a6bd;
+    border: 1px solid #073763;
+    
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   }
+`;
+const Main = styled.div`
+  width: 100vw;
+  height: 98vh;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 const InfoUsuario = styled.p`
   font-size: large;
@@ -91,22 +107,37 @@ const AreaLikes = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  button {
-    height: 40px;
-    width: 40px;
-    border-radius: 30px;
-    border: 1px solid black;
-    font-size: larger;
-    margin-right: 4px;
-    align-items: center;
-    justify-content: space-around;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  }
+`;
+const BotaoCurtir = styled.button`
+  height: 40px;
+  width: 40px;
+  border-radius: 30px;
+  border: 1px solid green;
+  font-size: larger;
+  margin-right: 4px;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  color: green;
+  margin-top: 15px;
+`;
+const BotaoPassar = styled.button`
+  height: 40px;
+  width: 40px;
+  border-radius: 30px;
+  border: 1px solid #e8250c;
+  font-size: larger;
+  margin-right: 4px;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  color: #e8250c;
+  margin-top: 15px;
 `;
 const Footer = styled.div`
-  height: 7vh;
+  height: 1vh;
   width: 100vw;
-  background-color: #d5a6bd;
+  background-color: #999999;
   display: flex;
   align-items: flex-end;
   justify-content: end;
@@ -135,7 +166,7 @@ export default function ComponenteFuncional(props) {
           setProfile(response.data.profile);
         } else {
           alert("acabaram os perfis disponíveis");
-          Clear()
+          props.Clear();
         }
       })
       .catch((error) => console.log(error.response));
@@ -145,17 +176,6 @@ export default function ComponenteFuncional(props) {
     GetProfileToChoose();
   }, []);
 
-  const Clear = () => {
-    const url = "https://us-central1-missao-newton.cloudfunctions.net/astroMatch/:aluno/clear"
-    const key = 'giovanna'
-    axios.put(url, {
-        headers: 'Content-Type: application/json'
-    }, key).then((response) => {
-
-        console.log(response)
-        alert("Deu certo!")
-    }).catch((error) => console.log(error.response))
-  }
   const ChoosePerson = (idProfile) => {
     console.log(idProfile);
     const url =
@@ -192,24 +212,30 @@ export default function ComponenteFuncional(props) {
     <div>
       <GlobalStyle></GlobalStyle>
       <Header>
-        <DivHeader>
-          <h2>astro</h2>
-          <h3>match</h3>
-          <h5>★</h5>
-        </DivHeader>
-        <button onClick={() => props.setTela("Matches")}> Matches </button>
+        <TituloCard></TituloCard>
       </Header>
 
       <Main>
         <CardHome>
+          <DivHeader>
+            <h2>astro</h2>
+            <h3>match</h3>
+            <h5>★</h5>
+            <BotaoCard onClick={() => props.setTela("Matches")}>
+              Matches
+            </BotaoCard>
+          </DivHeader>
           <img src={profile.photo} />
           <InfoUsuario>
             <b>{profile.name}</b>, {profile.age}
           </InfoUsuario>
           <TextoBio>{profile.bio}</TextoBio>
           <AreaLikes>
-            <button onClick={() => GetProfileToChoose()}> x </button>
-            <button onClick={() => ChoosePerson(profile.id)}> ♥ </button>
+            <BotaoPassar onClick={() => GetProfileToChoose()}> x </BotaoPassar>
+            <BotaoCurtir onClick={() => ChoosePerson(profile.id)}>
+              {" "}
+              ♥{" "}
+            </BotaoCurtir>
           </AreaLikes>
         </CardHome>
       </Main>
