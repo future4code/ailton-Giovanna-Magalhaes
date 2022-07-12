@@ -1,16 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-import {BASE_URL} from "./constants";
+import { BASE_URL } from "./constants";
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import HomePage from "./Pages/HomePage.js"
+import { Router } from "./Routes/Router";
+
 
 function App() {
   return (
     <div>
-      <HomePage></HomePage>
+    <Router/>
     </div>
   );
 }

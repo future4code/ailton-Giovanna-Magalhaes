@@ -3,7 +3,18 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+`;
 const Header = styled.header`
   background-color: white;
   height: 10vh;
@@ -55,18 +66,29 @@ const Footer = styled.footer`
   padding-right: 8px;
 `;
 
-export default function HomePage() {
+export const HomePage = () => {
+  const navigate = useNavigate()
+
+    const LoginPage = () => {
+      navigate("/login")
+    }
+    const PaginaListaViagens = () => { 
+    navigate("/trips/list")
+  }
+
   return (
     <div>
+      <GlobalStyle></GlobalStyle>
       <Header>
         <h1>LabeX</h1>{" "}
         <ImagemTitulo src="https://prints.ultracoloringpages.com/9803d589a11001692f891496aafe0d4f.png"></ImagemTitulo>
       </Header>
       <Main>
-        <Button>Lista de Viagens</Button>
-        <Button>Área Administrativa</Button>
+        <Button onClick={PaginaListaViagens}>Lista de Viagens</Button>
+        <Button onClick={LoginPage}>Área Administrativa</Button>
       </Main>
       <Footer>site por: Giovanna Magalhães</Footer>
     </div>
   );
 }
+export default HomePage;

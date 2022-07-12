@@ -3,15 +3,101 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
 
-export function CreateTrip () {
-const novasTrips = 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+`;
 
-useEffect(() => 
-axios.post(url)
-)
-axios.get(url).then((response) => {
-  console.log(response);
-  setId(response.data.id)
-}).catch(error => console.log(error))
-}
+const Header = styled.header`
+  background-color: white;
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dotted #a0ff0b;
+  h1 {
+    font-family: "Tahoma";
+    color: #a0ff0b;
+    margin-left: 15px;
+    padding-top: 5px;
+    font-size: 40px;
+  }
+`;
+const ImagemTitulo = styled.img`
+  height: 45px;
+  width: 45px;
+  left: 132px;
+  position: fixed;
+`;
+const BotaoVoltar = styled.button`
+  width: 65px;
+  height: 21px;
+  margin-left: 5px;
+  border-radius: 5px;
+  border: 1px solid #a0ff0b;
+  background-color: #a0ff0b;
+  margin-right: 15px;
+  box-shadow: 2px 5px 5px #b6d7a8;
+`;
+
+const Main = styled.main`
+  background-color: white;
+  height: 85vh;
+  width: 100vw;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`;
+const Footer = styled.footer`
+  background-color: white;
+  height: 3vh;
+  width: 100vw;
+  border-top: 1px dotted #a0ff0b;
+  font-size: smaller;
+  font-family: "Tahoma";
+  color: #ccff66;
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+  padding-right: 8px;
+`;
+
+export const CreateTrip = () => {
+  const navigate = useNavigate()
+  
+  const GoBack = () => {
+    navigate(-1);
+  };
+  return (
+    <div>
+      <GlobalStyle></GlobalStyle>
+      <Header>
+        <h1>LabeX</h1>{" "}
+        <ImagemTitulo src="https://prints.ultracoloringpages.com/9803d589a11001692f891496aafe0d4f.png"></ImagemTitulo>
+        <BotaoVoltar onClick={GoBack}> Voltar </BotaoVoltar>
+      </Header>
+      <Main></Main>
+      <Footer>site por: Giovanna Magalhães</Footer>
+    </div>
+  );
+
+  // const novasTrips =
+
+  // useEffect(() =>
+  // axios.post(url)
+  // )
+  // axios.get(url).then((response) => {
+  //   console.log(response);
+  //   setId(response.data.id)
+  // }).catch(error => console.log(error))
+};
+
+export default CreateTrip;
