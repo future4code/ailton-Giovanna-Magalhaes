@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import { BASE_URL } from "../UseRequestData/BASE_URL";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -66,7 +67,7 @@ const Inputs = styled.input`
   border: 1px solid #38761d;
 `;
 const BotaoInscricao = styled.button`
-width: 15vw;
+  width: 15vw;
   height: 21px;
   border-radius: 5px;
   border: 1px solid #a0ff0b;
@@ -91,10 +92,33 @@ const Footer = styled.footer`
 `;
 
 export const LoginPage = () => {
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const AdminHomePage = () => {
-    navigate("/admin/trips/list");
+  const onChangeUser = (event) => {
+    setUser(event.target.value);
+  };
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const submitLogin = () => {
+    const body = {
+      email: user,
+      password: password,
+    };
+
+    axios
+      .post(`${BASE_URL}/login`, body)
+      .then((response) => {
+        navigate("/admin/trips/list");
+        console.log("Deu tudo certo!", response.data);
+      })
+      .catch((error) => {
+        console.log("Deu tudo errado!", error.response);
+        alert("Usuário Inválido! Tente Novamente!");
+      });
   };
   const GoBack = () => {
     navigate(-1);
@@ -110,9 +134,14 @@ export const LoginPage = () => {
       </Header>
       <Main>
         <div>
-          <Inputs placeholder="Login" />
-          <Inputs placeholder="Senha" />
-          <BotaoInscricao onClick={AdminHomePage}>Confirmar</BotaoInscricao>
+          <Inputs placeholder="Usuário" onChange={onChangeUser} value={user} />
+          <Inputs
+            placeholder="Senha"
+            onChange={onChangePassword}
+            value={password}
+            type="password"
+          />
+          <BotaoInscricao onClick={submitLogin}> Confirmar </BotaoInscricao>
         </div>
       </Main>
       <Footer>site por: Giovanna Magalhães</Footer>

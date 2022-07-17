@@ -4,6 +4,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import { BASE_URL } from "../UseRequestData/BASE_URL";
+import { useRequestData } from "../UseRequestData/useRequestData";
+import { useForm } from "../UseRequestData/useForm";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -102,10 +105,48 @@ const Footer = styled.footer`
 `;
 
 export const ApplicationFormPage = () => {
+  const [trip, setTrip] = useState("");
+  const [data] = useRequestData(`${BASE_URL}/trips`);
+  const [form, onChange, cleanFields] = useForm({
+    nome: "",
+    idade: "",
+    texto: "",
+    profissao: "",
+    country: "",
+  });
+  const body = {
+    name: form.nome,
+    age: form.idade,
+    applicationText: form.texto,
+    profession: form.profissao,
+    country: form.country,
+  };
+  const optionsTrips = data.map((trip) => {
+    return (
+      <option value={trip.id} key={trip.id}>
+        {trip.name}
+      </option>
+    );
+  });
+
+  const onChangeTrips = (event) => {
+    setTrip(event.target.value);
+  };
   const navigate = useNavigate();
   const GoBack = () => {
     navigate(-1);
   };
+  const onSubmitTrip = () => {
+    axios
+      .post(`${BASE_URL}/trips/${trip}/apply`, body)
+      .then((response) => {
+        alert("Deu Certo!", response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <GlobalStyle></GlobalStyle>
@@ -117,14 +158,42 @@ export const ApplicationFormPage = () => {
       <Main>
         <ExibicaoInputs>
           <h2>Inscreva-se para uma viagem!</h2>
-          <Select>
+          <Select onChange={onChangeTrips}>
             <option value="">Escolha uma viagem</option>
+            {optionsTrips}
           </Select>
-          <Inputs placeholder="Nome" />
-          <Inputs placeholder="Idade" />
-          <Inputs placeholder="Texto" />
-          <Inputs placeholder="Profissão" />
-          <BotaoEnviar>Enviar</BotaoEnviar>
+          <Inputs
+            placeholder="Nome"
+            name={"nome"}
+            onChange={onChange}
+            value={form.nome}
+          />
+          <Inputs
+            placeholder="Idade"
+            name={"idade"}
+            onChange={onChange}
+            value={form.idade}
+            type="number"
+          />
+          <Inputs
+            placeholder="Texto"
+            name={"texto"}
+            onChange={onChange}
+            value={form.texto}
+          />
+          <Inputs
+            placeholder="Profissão"
+            name={"profissao"}
+            onChange={onChange}
+            value={form.profissao}
+          />
+          <Inputs
+            placeholder="País"
+            name={"country"}
+            onChange={onChange}
+            value={form.country}
+          />
+          <BotaoEnviar onClick={onSubmitTrip}>Enviar</BotaoEnviar>
         </ExibicaoInputs>
       </Main>
       <Footer>site por: Giovanna Magalhães</Footer>

@@ -85,12 +85,10 @@ export const TripDetailsPage = () => {
   const GoBack = () => {
     navigate(-1);
   };
-  //   const LoginPage = () => {
-  //     navigate("/login")
-  //   }
-  //   const PaginaListaViagens = () => {
-  //   navigate("/trips/list")
-  // }
+ 
+  useEffect(() => {
+    axios.get()
+  }, [])
   return (
     <div>
        <GlobalStyle></GlobalStyle>

@@ -64,7 +64,22 @@ const Main = styled.main`
   width: 100vw;
   display: inline-flex;
   align-items: center;
+`;
+const CardTripFilha = styled.div`
+  height: 17vh;
+  width: 38vw;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   justify-content: center;
+  border: 1px solid #a0ff0b;
+  border-radius: 8px;
+  padding: 3px;
+  margin-top: 5px;
+  margin-left: 8px;
+  font-family: "Tahoma";
+  font-size: small;
 `;
 const Footer = styled.footer`
   background-color: white;
@@ -83,17 +98,27 @@ const Footer = styled.footer`
 export const ListTripsPage = () => {
   const [data] = useRequestData(`${BASE_URL}/trips`);
   const tripList = data.map((trip) => {
-      return (
-        <div key={trip.name}>
-          <h4>ID: {trip.id}</h4>
-          <h4>Nome: {trip.name}</h4>
-          <h4>Descrição: {trip.description}</h4>
-          <h4>Planeta: {trip.planet}</h4>
-          <h4>Duração: {trip.durationInDays} dias</h4>
-          <h4>Data: {trip.date}</h4>
-        </div>
-      );
-    });
+    return (
+      <CardTripFilha key={trip.name}>
+        <p>
+          <b>Nome:</b> {trip.name}
+        </p>
+        <p>
+          <b>Descrição:</b> {trip.description}
+        </p>
+        <p>
+          <b>Planeta:</b> {trip.planet}
+        </p>
+        <p>
+          <b>Duração:</b> {trip.durationInDays} dias
+        </p>
+        <p>
+          <b>Data:</b> {trip.date}
+        </p>
+      </CardTripFilha>
+    );
+  });
+
   const navigate = useNavigate();
   const ApplicationPag = () => {
     navigate("/trips/application");
