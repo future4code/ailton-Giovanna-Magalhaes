@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import { BASE_URL } from "../constants";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -47,7 +48,7 @@ const BotaoVoltar = styled.button`
   box-shadow: 2px 5px 5px #b6d7a8;
 `;
 const BotaoDetalhes = styled.button`
-width: 15vw;
+  width: 15vw;
   height: 21px;
   border-radius: 5px;
   border: 1px solid #a0ff0b;
@@ -85,21 +86,35 @@ export const TripDetailsPage = () => {
   const GoBack = () => {
     navigate(-1);
   };
- 
+
+  const pathParams = useParams();
+  console.log("Oque rolou?", pathParams)
   useEffect(() => {
-    axios.get()
-  }, [])
+    const token = localStorage.getItem("token");
+
+    axios.get(`${BASE_URL}/trip/admin/trips/${pathParams.id}`,
+      {
+        headers: {
+          auth: token,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+  }, []);
+
   return (
     <div>
-       <GlobalStyle></GlobalStyle>
+      <GlobalStyle></GlobalStyle>
       <Header>
         <h1>LabeX</h1>{" "}
         <ImagemTitulo src="https://prints.ultracoloringpages.com/9803d589a11001692f891496aafe0d4f.png"></ImagemTitulo>
         <BotaoVoltar onClick={GoBack}> Voltar </BotaoVoltar>
       </Header>
-      <Main>
-        
-      </Main>
+      <Main></Main>
       <Footer>site por: Giovanna Magalhães</Footer>
     </div>
   );

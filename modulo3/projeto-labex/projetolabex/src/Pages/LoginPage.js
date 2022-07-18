@@ -113,7 +113,8 @@ export const LoginPage = () => {
       .post(`${BASE_URL}/login`, body)
       .then((response) => {
         navigate("/admin/trips/list");
-        console.log("Deu tudo certo!", response.data);
+        console.log("Deu tudo certo!", response.data.token);
+        localStorage.setItem('token', response.data.token)
       })
       .catch((error) => {
         console.log("Deu tudo errado!", error.response);
